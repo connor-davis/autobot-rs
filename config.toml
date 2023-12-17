@@ -1,0 +1,5 @@
+silent_shot_enabled = false
+silent_shot_lethal_key = "e"
+silent_shot_weapon_swap_key = "1"
+silent_shot_lethal_key_delay = 20
+silent_shot_weapon_swap_delay = 100
