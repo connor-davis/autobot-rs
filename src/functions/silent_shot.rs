@@ -4,10 +4,10 @@ use anyhow::Error;
 use enigo::{Enigo, Key, KeyboardControllable};
 use tokio::time::sleep;
 
-use crate::config::Config;
+use crate::config::load_config;
 
 pub async fn silent_shot() -> Result<(), Error> {
-    let config = Config::init()?;
+    let config = load_config()?;
 
     if config.silent_shot_enabled {
         let mut enigo = Enigo::new();
