@@ -57,7 +57,7 @@ pub async fn initialize_functions() -> Result<(), Error> {
         Err(e) => {
             eprintln!("Error: {}", e);
 
-            process::exit(1);
+            process::exit(0);
         }
     }
 }
