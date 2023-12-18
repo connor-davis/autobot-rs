@@ -1,5 +1,5 @@
 use anyhow::Error;
-use multiinput::{DeviceType, KeyId, RawEvent, RawInputManager};
+use multiinput::{DeviceType, RawEvent, RawInputManager};
 
 use crate::config::Config;
 
@@ -30,17 +30,25 @@ impl Gui {
         );
     }
 
-    pub fn menu(&self, options: Vec<&str>) -> String {
+    pub fn lines(&self, lines: Vec<String>) {
         self.clear();
         self.art();
 
+        for line in lines {
+            println!("{}", line);
+        }
+
+        print!("\n");
+    }
+
+    pub fn menu(&self, options: Vec<&str>) -> String {
         println!("Select an option:\n");
 
         for (index, option) in options.iter().enumerate() {
             println!("{}: {}", index + 1, option);
         }
 
-        println!("\n");
+        print!("\n");
 
         let mut input = String::new();
 
@@ -82,15 +90,18 @@ impl Gui {
                         println!("{}", message);
 
                         match event {
-                            RawEvent::KeyboardEvent(_, key_id, _) => {
-                                if key_id != KeyId::Escape && key_id != KeyId::Return {
-                                    return format!("{:?}", key_id);
-                                }
-                            }
                             RawEvent::MouseButtonEvent(_, button, _) => {
                                 return format!("{:?}", button);
                             }
-                            _ => (),
+                            _ => {
+                                let mut input = String::new();
+
+                                std::io::stdin().read_line(&mut input).unwrap();
+
+                                let input = input.trim().to_lowercase();
+
+                                return input;
+                            }
                         }
                     }
                 }
