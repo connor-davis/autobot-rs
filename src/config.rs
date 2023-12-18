@@ -28,7 +28,13 @@ pub fn save_config(config: Config) -> Result<(), Error> {
 
 pub fn load_config() -> Result<Config, Error> {
     if !std::path::Path::new("config.toml").exists() {
-        let config = Config::default();
+        let config = Config {
+            silent_shot_enabled: false,
+            silent_shot_lethal_key: "e".to_string(),
+            silent_shot_weapon_swap_key: "1".to_string(),
+            silent_shot_lethal_key_delay: 20,
+            silent_shot_weapon_swap_delay: 100,
+        };
 
         save_config(config.clone())?;
 
